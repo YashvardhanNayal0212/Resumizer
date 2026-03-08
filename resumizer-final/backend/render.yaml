@@ -1,0 +1,36 @@
+# ───────────────────────────────────────────────
+#  Resumizer Backend — Render Deployment Config
+# ───────────────────────────────────────────────
+
+services:
+  # Node.js API Server
+  - type: web
+    name: resumizer-backend
+    env: node
+    repo: https://github.com/YOUR_USERNAME/resumizer-backend.git
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /health
+    
+    # Environment variables (set these in Render dashboard)
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: ANTHROPIC_API_KEY
+        sync: false  # Set this manually in Render dashboard
+        
+    # Render automatically handles HTTPS and domains
+    # Your app will be available at: https://resumizer-backend.onrender.com
+
+# ───────────────────────────────────────────────
+#  Deployment Notes:
+#  1. Replace YOUR_USERNAME with your actual GitHub username
+#  2. Set ANTHROPIC_API_KEY in Render dashboard after deployment
+#  3. Free plan has ~15-minute cold start delay
+#  4. Consider paid plan ($7/month) for production use
+# ───────────────────────────────────────────────
